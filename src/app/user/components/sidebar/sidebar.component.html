@@ -1,0 +1,90 @@
+<div class="logo">
+  <p class="h2">Infrrd</p>
+</div>
+<div class="side-bar">
+  <ul class="flex flex-col">
+    <li class="list-item">Overview</li>
+    <li class="list-item">Message</li>
+    <li
+      class="list-item"
+      data-bs-toggle="offcanvas"
+      href="#filter"
+      role="button"
+      aria-controls="offcanvasExample"
+    >
+      Filter
+    </li>
+    <li class="list-item">History</li>
+    <li class="list-item">My account</li>
+    <button type="button" class="btn btn-primary" [routerLink]="['/emp-entry']">
+      Add user
+    </button>
+  </ul>
+</div>
+
+<div
+  class="offcanvas offcanvas-start"
+  tabindex="-1"
+  id="filter"
+  aria-labelledby="offcanvasExampleLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filters</h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <p class="h6">By Company</p>
+      <ng-container *ngFor="let company of companies; let i = index">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [id]="'companyFilter' + i"
+            [value]="company.selected"
+            (input)="
+              getCompanyFilterValue(!company.selected, company.companyKey)
+            "
+          />
+          <label class="form-check-label" [for]="'companyFilter' + i">{{
+            company.companyName
+          }}</label>
+        </div>
+      </ng-container>
+
+      <p class="h6 mt-2">By designation</p>
+      <ng-container *ngFor="let designation of designations; let i = index">
+        <div class="form-check">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [id]="'designationFilter' + i"
+            [value]="designation.selected"
+            (input)="
+              getDesignationFilterValue(
+                !designation.selected,
+                designation.designationKey
+              )
+            "
+          />
+          <label class="form-check-label" [for]="'designationFilter' + i">{{
+            designation.designationName
+          }}</label>
+        </div>
+      </ng-container>
+      <button
+        type="button"
+        class="btn btn-primary mt-2"
+        data-bs-dismiss="offcanvas"
+        (click)="onApplyFilters()"
+      >
+        Apply filters
+      </button>
+    </div>
+  </div>
+</div>

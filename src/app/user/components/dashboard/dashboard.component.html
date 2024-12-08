@@ -1,0 +1,93 @@
+<div class="container">
+  <div class="row">
+    <!--side bar-->
+    <div class="col-md-2">
+      <app-sidebar (emitFilter)="getFilters($event)"></app-sidebar>
+    </div>
+    <!--dashboard-->
+    <div class="col-md-10">
+      <div class="form-group w-1/2">
+        <label for="search">Search</label>
+        <input
+          type="text"
+          class="form-control"
+          id="search"
+          placeholder="type name or email"
+          (input)="onSearchInput($event)"
+          [(ngModel)]="searchText"
+        />
+      </div>
+      <div class="dashboard-content mt-2">
+        <p
+          class="h1 text-red-500 text-center"
+          *ngIf="(filteredData$ | async)?.length === 0"
+        >
+          No record available
+        </p>
+        <ng-container *ngFor="let user of filteredData$ | async">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <img [src]="imgUrl + user.avatar" />
+                <div class="name-role ml-1">
+                  <p class="text-sm">{{ user.name }}</p>
+                  <p class="text-sm">{{ findDesignation(user.designation) }}</p>
+                </div>
+              </div>
+              <div class="other-details">
+                <div class="other1">
+                  <div>
+                    <span class="title-heading">Experience: </span
+                    ><span>5.8 Years</span>
+                  </div>
+                  <div>
+                    <span class="title-heading">Date of joining: </span
+                    ><span>2017</span>
+                  </div>
+                </div>
+                <div class="other2">
+                  <div>
+                    <span class="title-heading">Company: </span
+                    ><span>{{ user.company }}</span>
+                  </div>
+                </div>
+                <div class="other2">
+                  <div>
+                    <span class="title-heading">Reporting manager: </span
+                    ><span>ABCD</span>
+                  </div>
+                </div>
+                <div class="other1">
+                  <div>
+                    <span class="title-heading">Mobile: </span
+                    ><span>{{ user.contactNo }}</span>
+                  </div>
+                  <div>
+                    <span class="title-heading">Mail: </span
+                    ><span>{{ user.email }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="flex">
+                <div
+                  class="action-btn edit-btn"
+                  [routerLink]="['/emp-entry']"
+                  [queryParams]="{ userId: user.id }"
+                >
+                  <i class="bi bi-pencil"></i>
+                </div>
+                <div
+                  class="action-btn ml-1 delete-btn"
+                  [appConfirm]="onUserDeleteConfirmClick(user.id)"
+                  [confirmMessage]="'Are you sure want to delete ' + user.name"
+                >
+                  <i class="bi bi-archive"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

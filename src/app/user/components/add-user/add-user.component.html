@@ -1,0 +1,202 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 pt-5">
+      <p class="h4">Employee {{ editMode ? "edit" : "create" }} form</p>
+      <ng-container *ngIf="isLoading">
+        <app-spinner></app-spinner>
+      </ng-container>
+      <div class="alert alert-danger mt-1" role="alert" *ngIf="error$ | async">
+        Error while submitting form
+      </div>
+      <form [formGroup]="empEntryForm" novalidate="novalidate">
+        <div class="form-group">
+          <label for="name">Name*</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="first and last name"
+            required
+            formControlName="name"
+            [ngClass]="{
+              'is-invalid':
+                empEntryForm.get('name')?.invalid &&
+                (empEntryForm.get('name')?.touched ||
+                  empEntryForm.get('name')?.dirty)
+            }"
+          />
+          <span
+            class="text-red-500"
+            *ngIf="
+              empEntryForm.get('name')?.invalid &&
+              (empEntryForm.get('name')?.touched ||
+                empEntryForm.get('name')?.dirty)
+            "
+            >Name field is required</span
+          >
+        </div>
+        <div class="form-group">
+          <label for="email">Email*</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Email"
+            required
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid':
+                empEntryForm.get('email')?.invalid &&
+                (empEntryForm.get('email')?.touched ||
+                  empEntryForm.get('email')?.dirty)
+            }"
+          />
+          <span
+            class="text-red-500"
+            *ngIf="
+              empEntryForm.get('email')?.invalid &&
+              (empEntryForm.get('email')?.touched ||
+                empEntryForm.get('email')?.dirty)
+            "
+            >Email field is required</span
+          >
+        </div>
+        <div class="form-group">
+          <label for="contactNo">Contact no*</label>
+          <input
+            type="text"
+            class="form-control"
+            id="contactNo"
+            placeholder="Mobile no"
+            required
+            formControlName="contactNo"
+            [ngClass]="{
+              'is-invalid':
+                empEntryForm.get('contactNo')?.invalid &&
+                (empEntryForm.get('contactNo')?.touched ||
+                  empEntryForm.get('contactNo')?.dirty)
+            }"
+          />
+          <span
+            class="text-red-500"
+            *ngIf="
+              empEntryForm.get('contactNo')?.invalid &&
+              (empEntryForm.get('contactNo')?.touched ||
+                empEntryForm.get('contactNo')?.dirty)
+            "
+            >Contact field is required</span
+          >
+        </div>
+        <div class="form-group">
+          <label for="company">Company*</label>
+          <select
+            class="form-select"
+            id="company"
+            formControlName="company"
+            [ngClass]="{
+              'is-invalid':
+                empEntryForm.get('company')?.invalid &&
+                (empEntryForm.get('company')?.touched ||
+                  empEntryForm.get('company')?.dirty)
+            }"
+          >
+            <option
+              *ngFor="let company of companies"
+              [value]="company.companyKey"
+            >
+              {{ company.companyName }}
+            </option>
+          </select>
+          <span
+            class="text-red-500"
+            *ngIf="
+              empEntryForm.get('company')?.invalid &&
+              (empEntryForm.get('company')?.touched ||
+                empEntryForm.get('company')?.dirty)
+            "
+            >Company field is required</span
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="designation">Designation*</label>
+          <select
+            class="form-select"
+            id="designation"
+            formControlName="designation"
+            [ngClass]="{
+              'is-invalid':
+                empEntryForm.get('designation')?.invalid &&
+                (empEntryForm.get('designation')?.touched ||
+                  empEntryForm.get('designation')?.dirty)
+            }"
+          >
+            <option
+              *ngFor="let designation of designations"
+              [value]="designation.designationKey"
+            >
+              {{ designation.designationName }}
+            </option>
+          </select>
+          <span
+            class="text-red-500"
+            *ngIf="
+              empEntryForm.get('designation')?.invalid &&
+              (empEntryForm.get('designation')?.touched ||
+                empEntryForm.get('designation')?.dirty)
+            "
+            >Designation field is required</span
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="avatar">Avatar*</label>
+          <div class="flex">
+            <select
+              class="form-select w-1/2"
+              id="avatar"
+              formControlName="avatar"
+              [ngClass]="{
+                'is-invalid':
+                  empEntryForm.get('avatar')?.invalid &&
+                  (empEntryForm.get('avatar')?.touched ||
+                    empEntryForm.get('avatar')?.dirty)
+              }"
+            >
+              <option value="avatar1.jpeg">Avatar 1</option>
+              <option value="avatar2.jpeg">Avatar 2</option>
+              <option value="avatar3.jpeg">Avatar 3</option>
+            </select>
+            <div class="w-1/2 ml-2">
+              <p>Preview</p>
+              <img
+                class="avatar"
+                *ngIf="this.empEntryForm.get('avatar')?.value"
+                [src]="imgUrl + this.empEntryForm.get('avatar')?.value"
+              />
+            </div>
+          </div>
+          <span
+            class="text-red-500"
+            *ngIf="
+              empEntryForm.get('avatar')?.invalid &&
+              (empEntryForm.get('avatar')?.touched ||
+                empEntryForm.get('avatar')?.dirty)
+            "
+            >Avatar field is required</span
+          >
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary mt-3"
+          (click)="onSubmitForm()"
+          [disabled]="empEntryForm.invalid"
+        >
+          {{ editMode ? "Edit" : "Create" }}
+        </button>
+      </form>
+    </div>
+    <div class="col-md-4"></div>
+  </div>
+</div>

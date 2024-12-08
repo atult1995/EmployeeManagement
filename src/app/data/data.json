@@ -1,0 +1,22 @@
+{
+  "employees": [
+    {
+      "name": "Atul Prakash",
+      "email": "prakashatul54@gmail.com",
+      "contactNo": 6260152855,
+      "company": "XYZ",
+      "designation": "sd",
+      "avatar": "avatar3.jpeg",
+      "id": "30c7"
+    },
+    {
+      "id": "c346",
+      "name": "Vivek Kumar",
+      "email": "vivek@gmail.com",
+      "contactNo": 67767667,
+      "company": "ABC",
+      "designation": "qa",
+      "avatar": "avatar2.jpeg"
+    }
+  ]
+}

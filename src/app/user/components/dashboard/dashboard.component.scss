@@ -1,0 +1,66 @@
+.col-md-2 {
+  @apply flex flex-col pt-5;
+  // border: 1px solid red;
+}
+.col-md-10 {
+  @apply pt-5;
+  // border: 1px solid blue;
+  .dashboard-content {
+    @apply flex mt-2;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+}
+
+.card {
+  flex: 0 0 calc(32% - 10px);
+  height: 250px;
+  font-size: 12px;
+  .card-title {
+    @apply flex;
+    img {
+      @apply rounded-3xl;
+      height: 50px;
+      width: 50px;
+      // border-radius: 40px;
+    }
+  }
+  .other-details {
+    @apply flex flex-col;
+    .other1 {
+      @apply flex justify-between pt-2 pb-2;
+      border-top: 1px solid #a0a0a0;
+    }
+  }
+  .title-heading {
+    color: #a0a0a0;
+  }
+  .title-heading {
+    color: #a0a0a0;
+  }
+  .other2 {
+    @apply flex pt-2 pb-2;
+    border-top: 1px solid #a0a0a0;
+  }
+  .action-btn {
+    display: flex;
+    height: 27px;
+    width: 27px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .delete-btn {
+    color: #dc3545;
+    border: 1.5px solid #dc3545;
+  }
+  .edit-btn {
+    color: #0d6efd;
+    border: 1.5px solid #0d6efd;
+  }
+}
+
+.form-group {
+  @apply mt-2;
+}

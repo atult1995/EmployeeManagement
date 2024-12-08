@@ -1,0 +1,10 @@
+.form-group {
+  @apply mt-5;
+}
+
+.avatar {
+  @apply rounded-3xl;
+  height: 50px;
+  width: 50px;
+  // border-radius: 40px;
+}
