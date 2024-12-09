@@ -1,5 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { COMPANY, DESIGNATION } from '../../helpher/helpher';
+import {
+  Company,
+  COMPANY,
+  deepCopy,
+  Designation,
+  DESIGNATION,
+} from '../../helpher/helpher';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -9,17 +15,19 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SidebarComponent implements OnInit {
   @Output() emitFilter = new EventEmitter();
-  designations = DESIGNATION;
-  companies = COMPANY;
+  designations: Designation[] = [];
+  companies: Company[] = [];
   filterCompanies: string[] = [];
   filterDesignations: string[] = [];
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initDesignationAndCompany();
+  }
 
   getCompanyFilterValue(event: any, value: any) {
-    let temp = this.companies.find((com) => com.companyKey === value);
+    let temp = this.companies.find((com: any) => com.companyKey === value);
     if (temp) {
       temp.selected = event;
       if (event === false) {
@@ -33,7 +41,9 @@ export class SidebarComponent implements OnInit {
   }
 
   getDesignationFilterValue(event: any, value: any) {
-    let temp = this.designations.find((des) => des.designationKey === value);
+    let temp = this.designations.find(
+      (des: any) => des.designationKey === value
+    );
     if (temp) {
       temp.selected = event;
       if (event === false) {
@@ -57,5 +67,19 @@ export class SidebarComponent implements OnInit {
       filterCompanies: this.filterCompanies,
       filterDesignations: this.filterDesignations,
     });
+  }
+  clearFilter() {
+    this.filterDesignations = [];
+    this.filterCompanies = [];
+    this.initDesignationAndCompany();
+    this.emitFilter.emit({
+      filterCompanies: this.filterCompanies,
+      filterDesignations: this.filterDesignations,
+    });
+  }
+
+  initDesignationAndCompany() {
+    this.designations = deepCopy(DESIGNATION);
+    this.companies = deepCopy(COMPANY);
   }
 }

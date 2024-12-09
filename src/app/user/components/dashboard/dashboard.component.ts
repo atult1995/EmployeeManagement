@@ -43,20 +43,22 @@ export class DashboardComponent implements OnInit {
     switchMap(([users, searchText, filterCom, filterDes]) =>
       this.userService.getEmployee().pipe(
         map((users) => {
+          //start with filter
+          //start with company filter
+          console.log(filterCom, filterDes);
           let tempUsers: User[] = [];
           if (filterCom.length > 0) {
             filterCom.forEach((fc) => {
               users.forEach((user) => {
                 if (user.company === fc) {
                   //lets check if that user is not already there
-                  const existingUser = tempUsers.find(
-                    (u) => u.company === user.company
-                  );
+                  const existingUser = tempUsers.find((u) => u.id === user.id);
                   if (!existingUser) tempUsers.push(user);
                 }
               });
             });
           }
+          //applying designation filter
           if (filterDes.length > 0) {
             filterDes.forEach((fd) => {
               users.forEach((user) => {
@@ -68,7 +70,7 @@ export class DashboardComponent implements OnInit {
               });
             });
           }
-
+          //applying search on final result
           if (tempUsers.length > 0) {
             return tempUsers.filter((user) => {
               return (
