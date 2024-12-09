@@ -1,11 +1,27 @@
-FROM node:alpine
+# Step 1: Build the Angular app
+FROM node:18 AS build
 
-WORKDIR /usr/src/app
+# Set the working directory in the container
+WORKDIR /app
 
-COPY . /usr/src/app
-
-RUN npm install -g @angular/cli
-
+# Copy package.json and install dependencies
+COPY package.json package-lock.json ./
 RUN npm install
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+# Copy the rest of the application files
+COPY . .
+
+# Build the Angular application for production
+RUN npm run build --prod
+
+# Step 2: Serve the Angular app using Nginx
+FROM nginx:alpine
+
+# Copy the build files from the previous stage into Nginx's default directory
+COPY --from=build /app/dist/emp-dashboard /usr/share/nginx/html
+
+# Expose the port Nginx is running on
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]
