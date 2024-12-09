@@ -7,7 +7,7 @@
         <app-spinner></app-spinner>
       </ng-container>
       <div class="alert alert-danger mt-1" role="alert" *ngIf="error$ | async">
-        Error while submitting form
+        {{ error$ | async }}
       </div>
       <form [formGroup]="empEntryForm" novalidate="novalidate">
         <div class="form-group">
@@ -49,8 +49,10 @@
               'is-invalid':
                 empEntryForm.get('email')?.invalid &&
                 (empEntryForm.get('email')?.touched ||
-                  empEntryForm.get('email')?.dirty)
+                  empEntryForm.get('email')?.dirty),
+              'opacity-50': editMode
             }"
+            [readonly]="editMode"
           />
           <span
             class="text-red-500"

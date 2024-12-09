@@ -77,14 +77,24 @@
           }}</label>
         </div>
       </ng-container>
-      <button
-        type="button"
-        class="btn btn-primary mt-2"
-        data-bs-dismiss="offcanvas"
-        (click)="onApplyFilters()"
-      >
-        Apply filters
-      </button>
+      <div class="flex gap-1">
+        <button
+          type="button"
+          class="btn btn-primary mt-2"
+          data-bs-dismiss="offcanvas"
+          (click)="onApplyFilters()"
+        >
+          Apply filters
+        </button>
+        <button
+          type="button"
+          class="btn btn-warning mt-2"
+          data-bs-dismiss="offcanvas"
+          (click)="clearFilter()"
+        >
+          clear filter
+        </button>
+      </div>
     </div>
   </div>
 </div>

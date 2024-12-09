@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, mapTo, Subject, timer } from 'rxjs';
+import { nanoid } from 'nanoid';
 
 @Component({
   selector: 'app-add-user',
@@ -14,7 +15,7 @@ export class AddUserComponent implements OnInit {
   designations = DESIGNATION;
   companies = COMPANY;
   empEntryForm: FormGroup;
-  error$ = new BehaviorSubject<boolean>(false);
+  error$ = new BehaviorSubject<string>('');
   editMode: boolean = false;
   userId: string = '';
   isLoading: boolean = false;
@@ -27,14 +28,13 @@ export class AddUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initForm();
     const userId = this.route.snapshot.queryParamMap.get('userId');
     if (userId) {
       this.onEditForm(userId);
       this.editMode = true;
       this.userId = userId;
     }
-
-    this.initForm();
   }
 
   initForm(): void {
@@ -67,17 +67,22 @@ export class AddUserComponent implements OnInit {
         user = { ...user, contactNo: Number(user.contactNo), id: this.userId };
         request = this.userService.onSubmitEditDetails(user);
       } else {
+        user = { ...user, id: nanoid() };
         request = this.userService.onSubmitEmployeeDetails(user);
       }
-      request.subscribe({
+      request.pipe().subscribe({
         next: (res) => {
+          if (res?.code === 400) {
+            this.error$.next(res?.message);
+          } else {
+            this.router.navigate(['/user']);
+          }
           this.isLoading = false;
-          this.router.navigate(['/user']);
         },
         error: (e) => {
-          this.error$.next(true);
+          this.error$.next('There is tech error');
           this.isLoading = false;
-          timer(5000).pipe(mapTo(false)).subscribe(this.error$);
+          timer(5000).pipe(mapTo('')).subscribe(this.error$);
         },
       });
     } else {

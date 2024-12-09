@@ -18,6 +18,13 @@ export interface Company {
   companyKey: string;
   selected: boolean;
 }
+
+export interface Response {
+  code: number;
+  response?: User;
+  message: string;
+}
+
 export const DESIGNATION: Designation[] = [
   {
     designationKey: 'sd',
@@ -58,3 +65,17 @@ export const COMPANY: Company[] = [
     selected: false,
   },
 ];
+
+export const USER: User = {
+  id: '',
+  name: '',
+  email: '',
+  contactNo: 0,
+  company: '',
+  designation: '',
+  avatar: '',
+};
+
+export function deepCopy(copyItem: any) {
+  return JSON.parse(JSON.stringify(copyItem));
+}
