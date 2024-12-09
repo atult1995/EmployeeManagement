@@ -4,10 +4,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 
 ## Development server
-=> open two tab
-=>run ng serve in first one
-=>run npm run server in second tab
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+1> two way you can run the app
+1st method if dont want local server then simply run ng serve
+2nd method:
+  =>first go to user service and comment 2nd version code and un comment 1st version code
+  => open two tab
+  =>run ng serve in first one
+  =>run npm run server in second tab
+  Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 
 ## Code scaffolding
