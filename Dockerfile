@@ -30,11 +30,14 @@
 # Use a lightweight web server image
 FROM nginx:alpine
 
-# Copy the built Angular application from your local machine
+# Copy the built Angular application
 COPY ./dist/emp-dashboard /usr/share/nginx/html
+
+# Copy the Nginx configuration file
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose the default Nginx port
 EXPOSE 80
 
-# Start the Nginx server
+# Start Nginx
 CMD ["nginx", "-g", "daemon off;"]
